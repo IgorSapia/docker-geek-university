@@ -1,0 +1,21 @@
+%TAG ! tag:conteudodatag:nomedatag:
+#criação da tag com o nome dela em minúsculo
+---
+#host: !NOMEDATAG 
+datacenter:
+  location: Presidente Prudente
+  router: "23"
+# uso da tag com o nome dela em MAIÚSCULO
+---
+#host: !NOMEDATAG
+datacenter:
+  location: Presidente Prudente
+  router: !!str 23
+# Uso da !!str como tag para transformar o 
+# valor de router em string
+
+
+#OBS: Ficou confuso na aula, verificar correto uso de TAG!
+#comentei o host, estava apontando erro.
+
+  

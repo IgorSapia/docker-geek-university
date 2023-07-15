@@ -1,0 +1,25 @@
+---
+host: nomeDoHost
+datacenter:
+  location: localDoHost
+  router: 42
+roles:
+  - web  
+  - dns
+---
+host: nomeDoHost
+datacenter:
+  location: localDoHost
+  router: 42
+roles:
+  - web  
+  - dns
+---
+- teste1
+- teste2
+- teste3
+---
+
+
+# --- representa o começo de uma nova configuração
+# o que está dividido por tal não influência o outro

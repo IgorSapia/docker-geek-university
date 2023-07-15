@@ -1,0 +1,13 @@
+# se rules for descomentada, yaml para de funcionar
+# rules:
+#   - algo um
+#   - algo dois
+
+# Uma lista s/ chave pode ocorrer, contudo não pode haver outro
+# mapa no mesmo arquivo.
+# Lista abaixo só funciona s/ rules estiver comentado. 
+- o que fazer primeiro
+- o que fazer depois
+- o que fazer por último
+
+

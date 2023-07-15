@@ -1,0 +1,21 @@
+#existem dois estilos de se escrever: Block ou Flow
+#o estilo Block é mais organizado ->Recomendado
+
+# Start Block
+host1: TesteBlock
+datacenter1:
+  location: Presidente Prudente
+  router: 21
+roles1:
+  - web
+  - dns
+# End Block
+
+# Start Flow
+host2: "TesteFlow"
+datacenter2: { location: Presidente Prudente, router: 21 }
+roles2: [web, dns]
+# End Flow
+
+
+

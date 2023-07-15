@@ -1,0 +1,12 @@
+host: nomeDoHost
+datacenter:
+  location: localDoHost
+  router: 42
+roles:
+#assim que se faz listas, 2 espaços e um -
+  - web  
+  - dns
+
+# são configurações apenas host, datacenter e roles.
+# location, router fazem parte de datacenter
+# web e dns, são itens da lista de roles

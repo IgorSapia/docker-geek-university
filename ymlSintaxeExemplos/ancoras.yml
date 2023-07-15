@@ -1,0 +1,24 @@
+host1: TesteBlock
+datacenter1:
+  location: &CITY Presidente Prudente
+  router: 21
+roles1:
+  - web
+  - dns
+# nesta configuração estou criando uma âncora 
+# CITY ela receberá Presidente Prudente, tal fica
+# visivel pelo & (cria e seta o valor)  
+
+---
+
+host1: TesteBlock
+datacenter1:
+  location: *CITY
+  router: 21
+roles1:
+  - web
+  - dns
+
+# nesta configuração estou usando uma âncora 
+# CITY ela possui o valor Presidente Prudente, tal fica
+# visivel pelo * (utiliza a ancora como valor)  

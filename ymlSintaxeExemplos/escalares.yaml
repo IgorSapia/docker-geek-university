@@ -1,0 +1,28 @@
+host: nomeDoHost
+datacenter:
+  location: localDoHost
+  router: 42
+  switch: "11"
+roles:
+  - web  
+  - dns
+preservaLinhas: |
+  primeira linha - 1o
+  segunda linha  - 2o
+  terceira linha - 3o
+naoPreservaLinha: >
+  Aqui não haverá o respeito
+  pelas linhas, logo caso o
+  naoPreservaLinha for visualizado
+  será mostrado em um linha única
+
+    Essa é uma forma de separar os textos,
+    pois este texto será o secundário que
+    pertence ao texto acima do naoPreservaLinha.
+
+# No caso de router deixamos ele como int, pois no exemplo
+# ele seria utilizado para uma conta matemática.
+
+# No caso de switch deixamos ele como string, pois no exemplo
+# ele NÃO seria utilizado para uma conta matemática.
+

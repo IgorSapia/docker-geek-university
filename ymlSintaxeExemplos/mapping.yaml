@@ -1,0 +1,8 @@
+host: TesteMap
+datacenter:
+  location: Presidente Prudente
+  router: 21
+
+# yaml pede um espaço após o :
+# host é uma CHAVE e TesteMap é um VALOR
+# essa relação é o mapeamento 

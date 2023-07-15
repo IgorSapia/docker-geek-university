@@ -1,0 +1,77 @@
+version: "3.8"
+
+services: #serviços a serem criados
+  nginx: #um dos serviços - Load Balance
+    build: #dados p/ o build
+      dockerfile: ./docker/nginx.dockerfile #file p/ montar a img
+      context: ./fusion_compose #contextualizando que é pra pegar as coisas da fusion_compose
+    image: igorsapia/nginx_fusion:v1 #nome da img a ser criada
+    container_name: nginx #nome do container a ser feito
+    ports:
+      - "8080:80" #porta do Host e do Container
+    networks:
+      - nwfusion #rede a ser usada
+    depends_on: #Esse serviço depende da lista abaixo
+      - fusion1 
+      - fusion2
+      - fusion3
+
+  pgfusion: #um dos serviços - Container DB
+    build:
+      dockerfile: ./docker/pgfusion.dockerfile
+      context: ./fusion_compose #contextualizando que é pra pegar as coisas da fusion_compose
+    image: igorsapia/pgfusion:v1
+    container_name: pgfusion
+    ports:
+      - "5432" #porta do container apenas, único modo de comunicação é pelo host
+    networks:
+      - nwfusion
+    volumes: #dados do banco tb são salvos em pgdata (mesmo se apagar o container do banco fica salvo na VM)
+      - pgdata:/var/lib/postgresql/data/
+
+  fusion1: #um dos serviços - Servidor Django
+    build:
+      dockerfile: ./docker/fusion.dockerfile
+      context: ./fusion_compose #contextualizando que é pra pegar as coisas da fusion_compose
+    image: igorsapia/fusion:v1
+    container_name: fusion1
+    ports:
+      - "8000" #porta do container apenas, único modo de comunicação é pelo host
+    networks:
+      - nwfusion
+    depends_on:
+      - pgfusion
+
+  fusion2: #um dos serviços - Servidor Django
+    build:
+      dockerfile: ./docker/fusion.dockerfile
+      context: ./fusion_compose #contextualizando que é pra pegar as coisas da fusion_compose
+    image: igorsapia/fusion:v1
+    container_name: fusion2
+    ports:
+      - "8000" #porta do container apenas, único modo de comunicação é pelo host
+    networks:
+      - nwfusion
+    depends_on:
+      - pgfusion
+    
+  fusion3: #um dos serviços - Servidor Django
+    build:
+      dockerfile: ./docker/fusion.dockerfile
+      context: ./fusion_compose #contextualizando que é pra pegar as coisas da fusion_compose
+    image: igorsapia/fusion:v1
+    container_name: fusion3
+    ports:
+      - "8000" #porta do container apenas, único modo de comunicação é pelo host
+    networks:
+      - nwfusion
+    depends_on:
+      - pgfusion
+#OBS: Sempre bom criar networks próprias para cada projeto
+# caso contrario terá inúmeros projetos na mesma rede
+networks: #criando a network que está sendo usada nos serviços
+  nwfusion:
+    driver: bridge
+
+volumes: #criando o volume onde será salvo na VM o que persistiu no container
+  pgdata:

@@ -1,0 +1,59 @@
+1 - Sempre colocar a TAG c/ a versão da imagem
+    ex: docker pull ubuntu:13.1
+2 - Dar preferencia ao alpine (mais leve)
+        ex: docker pull nginx:1.19.4-alpine
+3 - Comando p/ espelhar a porta da VM na da minha máquina
+    docker run -v "/var/www" --name nomeDoContainer -d -e NGINX ENTRYPOINT QUIET=1 -p 8080:80 nginx:1.19.4-alpine
+    OBS: 8080 é a minha porta, 80 é a porta da VM
+    OBS2: No caso da 80 é só a porta http
+    OBS3: -e informa variavel de instância p/ não mostrar o log
+    OBS4: -p é infromando a configuração da porta
+    OBS5: -v indica em qual parte de dentro do container será mapeado p/ o voluma
+    OBS6: Volume está ligado a persistência do conteudo do container no HOST (pode apagar o container e persiste os dados do container)
+    OBS7: -d é para permitir o terminal possa ser usado mesmo após o comando de criar o container
+4 - Comando para executar o shell de um container em execução
+    docker exec -it nomeDoServidor sh
+    obs: -it é de forma interativa (não sei o que significa)
+    obs2: sh é para abrir o shell
+5 - Comando para fazer a montagem do volume (Pega coisas do Host e salva coisas do Container)
+    docker run --name nomeDoContainer -d -e NGINX ENTRYPOINT QUIET=1 -p 8080:80 -v "/Users/Igor Sapia/Documents:/usr/share/nginx/html" nginx:1.19.4-alpine
+    obs: /Users/Igor Sapia/Documents é o lado do host e /usr/share/nginx/html vai ser o lado do container
+    obs2: o Mounts (docker inspect) representa o volume, mostando a rota do host e do container
+6 - Dockerfile serve para configurar a criação do container, ao invés do código no terminal
+7 - Comando p/ transformar o dockerfile em imagem
+    docker build -f web_server.dockerfile -t igorsapia/servidor_web_teste:v1 .
+    obs: -f serve para apontar qual arquivo vai virar imagem
+    obs2:-t vai nomear a imagem a ser criada
+    obs3: O . ao final é para dizer que o web_server.docker está na raiz da pasta
+8 - Docker network
+    Por padrão utiliza a bridge, que fica entre a rede do host e o Container
+    obs: Pode ser direto a rede do host, basta definir o network como host
+    obs2: pode não ter conexão, basta definir a network como none
+    obs3: é possível criar redes personalizas, além da Host, Bridge e None.
+9 - Conectar Containers em diferentes redes 
+    docker network connect nomeDaRede nomeDoContainerASerConectado
+    obs: nomeDaRede no exemplo original foi bridge (que é uma das redes padrão do docker)
+10 - Container com DB não tem porta externa ao mundo, apenas pode se acessar ele por meio
+    da bridge, outro container.
+    docker run --name "nome_do_container_db" -d nomedaimg:versão
+11 - No local do docker-compose rodar o comando docker-compose build para criar
+   a imagem
+12 - No local do docker-compose, após a imagem ter sido criada, rodar
+   o comando docker-compose up -d, para montar os containers e o -d
+   é para permitir que o terminal continue usável.
+13 - MUITO IMPORTANTE: Ao fazer o docker-compose verificar os 
+   dockerfiles que serão utilizados, pois o COPY deles indicará
+   o que cada container utilizará p/ fazer os processos de build da imagem
+   No meu caso eu não segui a aula e fiz uma pasta docker p/ tudo
+   se tivesse deixado os dockerfiles da fusion_compose como o prof
+   fez o meu docker-compose build e docker-compose up -d não vão 
+   funcionar. Tive que mudar o copy da imagem e do que será salvo
+   no www (o qual é o WORKDIR do container)
+14 - MUITO IMPORTANTE 2: Maneira de evitar o problema de cima é
+   usar o context do docker-compose.
+15 - Para publicar online na nuvem, colocar a aplicação na porta 80,
+   ao invés da 8080
+16 - Criar docker-machine via terminal
+  docker-machine create --driver amazonec2 --amazonec2-region "nome-da-regiao" nomeDaMaquinaVirtual
+17 - docker-machine env nomeDaMaquinaVirtual e eval $(docker-machine env nomeDaMaquinaVirtual)
+  permite que dê comandos no docker local, o qual irá influenciar tb a nuvem.
